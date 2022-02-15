@@ -1,92 +1,109 @@
-# FoodKeeper NewBackend
+# FoodKeeper Backend
+
+Project hosting for the refactoring of the FoodKeeper API Backend in Javascript.
+
+### Requirements
+* TBD
+
+### Application Download and Build
+* TBD
+
+## REST API Endpoints
+
+| Method | Endpoint  | Body  | Return | Note |
+| -----  | --------- | ----- | ------ | ---- |
+| GET   | /products | | | Returns list of all products |
+| GET    | /products/*id* | | {<br>"id": *id*, "name": *"name"*, "subtitle": *"subtitle"*, "keywords": *"keywords"*, <br>"pantryLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"pantryAfterOpeningLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"refrigeratorLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"refrigrateAfterOpeningLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"refrigerateAfterThawingLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"freezerLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"dop_pantryLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"dop_refrigeratorLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*}, <br>"dop_freezerLife": {"min": *min*, "max": *max*, "metric": *"metric"*, "tips": *"tips"*} <br>} | Returns product with given id |
+| GET   | /products/*id*/name | | *name* | Returns name for this product id |
+| GET   | /products/category/*categoryId* | | | Returns all products with the given category id |
+| GET   | /categories | | | Returns list of all categories |
+| GET   | /categories/*id* | | {"id": *id*, "name": *"name"*, "subcategory": *"subcategory"*} | Returns category with given id |
+| GET   | /cookingMethods | | | Returns list of all cooking methods |
+| GET   | /cookingMethods/*id* | | {"id": *id*, "method": *"method"*, "measureFrom": *measureFrom*, "measureTo": *measureTo*, "sizeMetric": *"sizeMetric"*, "cookingTemp", *"cookingTemp"*, "timingFrom": *timingfrom*, "timingTo": *timingTo*, "timingMetric": *"timingMetric"*, "timingPer": *"timingPer"*, "productId": *productId*} | Returns cooking method with given id |
+| GET   | /cookingTips | | | Returns list of all cooking tips |
+| GET   | /cookingTips/*id* | | {"id": *id*, "tips": *"tips"*, "safeMinTemp": *safeMinTemp*, "restTime": *restTime*, "restTimeMetric": *"restTimeMetric"*} | Returns cooking tip with given id |
 
 
+### Class Representation of Food Keeper Data
 
-## Getting started
+1. Category
+	* ID: Integer
+	* Category_Name: String
+	* Subcategory_Name: String
+2. Product
+	* ID: Integer (of Product)
+	* Category_ID: Integer (related to Category)
+	* Name: String
+	* Name_subtitle: String
+	* Keywords: String
+	* Pantry_Min: Integer (These can be null)
+	* Pantry_Max: Integer
+	* Pantry_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* Pantry_tips: String
+	* DOP\_Pantry_Min: Integer
+	* DOP\_Pantry_Max: Integer
+	* DOP\_Pantry_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* DOP\_Pantry_tips: String
+	* Pantry\_After\_Opening_Min: Integer
+	* Pantry\_After\_Opening_Max: Integer
+	* Pantry\_After\_Opening_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* Refrigerate_Min: Integer
+	* Refrigerate_Max: Integer
+	* Refrigerate_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* Refrigerate_tips: String
+	* DOP\_Refrigerate_Min: Integer
+	* DOP\_Refrigerate_Max: Integer
+	* DOP\_Refrigerate_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* DOP\_Refrigerate_tips: String
+	* Refrigerate\_After\_Opening_Min: Integer
+	* Refrigerate\_After\_Opening_Max: Integer
+	* Refrigerate\_After\_Opening_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended, Package use-by date)
+	* Refrigerate\_After\_Thawing_Min: Integer
+	* Refrigerate\_After\_Thawing_Max: Integer
+	* Refrigerate\_After\_Thawing_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* Freeze_Min: Integer
+	* Freeze_Max: Integer
+	* Freeze_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* Freeze_Tips: String
+	* DOP\_Freeze_Min: Integer
+	* DOP\_Freeze_Max: Integer
+	* DOP\_Freeze_Metric: String
+		* (Days, Weeks, Months, When Ripe, Indefinitely, Not Recommended)
+	* DOP\_Freeze_Tips: String
+3. CookingTip
+	* ID: Integer
+	* Product_ID: Integer
+	* Tips: String
+	* Safe\_Minimum_temperature: Integer
+	* Rest_Time: Integer
+	* Rest\_Time_metric: String
+4. CookingMethod
+	* ID: Integer
+	* Product_ID: Integer
+	* Cooking_Method: String (e.g. Skillet or Oven, etc.)
+	* Measure_from: Decimal
+	* Measure_to: Decimal
+	* Size_metric: String
+		* Pounds, Ounces, Inches
+	* Cooking_Temperature: String
+	* Timing_from: Decimal
+	* Timing_to: Decimal
+	* Timing_metric: String
+		* Hours, Minutes, Seconds
+	* Timing_per: String
+		* Pound, Ounce, Inch
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/LibreFoodPantry/common-services/foodkeeper/foodkeeper-newbackend.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/LibreFoodPantry/common-services/foodkeeper/foodkeeper-newbackend/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+---
+Copyright &copy; 2022 The LibreFoodPantry Community. This work is licensed
+under the Creative Commons Attribution-ShareAlike 4.0 International License.
+To view a copy of this license, visit
+http://creativecommons.org/licenses/by-sa/4.0/.
