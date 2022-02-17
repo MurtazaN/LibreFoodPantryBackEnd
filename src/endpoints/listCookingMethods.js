@@ -1,12 +1,12 @@
-const CookingTips = require("../data/CookingMethods.js"); //Need to add data/CookingTips in future issue
+const CookingMethods = require("../data/CookingMethods.js"); 
 
 module.exports = {
   method: 'get',
-  path: '/cookingTips', 
-  async handler(request, response) {
-    let cookingTips;
-    cookingTips = await CookingTips.getCookingMethods(); //Need to implement getCookingMethods()
-    response.status(200).json(cookingTips);
+  path: '/cookingMethods', 
+  async handler(response) {
+    let cookingMethods;
+    cookingMethods = await CookingMethod.getCookingMethods(); 
+    response.status(200).json(cookingMethods);
   }
 };
 
