@@ -1,7 +1,6 @@
 const Category = require('../data/category.js');
 const { assert } = require('chai');
 const expect = chai.expect;
-const assert = chai.assert;
 
 describe('category, getAll', function(){
     let category = Category;
