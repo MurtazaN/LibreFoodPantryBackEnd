@@ -17,7 +17,8 @@ describe('category, getOne', function(){
         let res = await category.getOne(-1);
         expect(res).to.be.undefined;
     })
-    it('Verify method words with a test ID, category object is returned')
+    it('Verify method words with a test ID, category object is returned', async()=>{
         let res = await category.getOne(testID)
         expect(res.type).to.be.an('category');
+    })
 });
