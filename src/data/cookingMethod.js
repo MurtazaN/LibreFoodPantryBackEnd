@@ -39,21 +39,21 @@ class CookingMethod{
 
 module.exports = CookingMethod
 
-async function main() {
-    async function getUSDAData(){
-        let res = await axios.get(url);
-        let data = res.data;
-        let version = data.sheets[0].data;
-        let categorys = data.sheets[1].data;
-        let products = data.sheets[2].data;
-        let cookingTips = data.sheets[3].data;
-        let cookingMethods = data.sheets[4].data;
-        let dataDictionary = data.sheets[5].data;
-        return products;
-    }
-    let cookingMethod = await CookingMethod.getAll();
-    //let cookingMethod = await CookingMethod.getOne(1);
-    console.log(cookingMethod);
+// async function main() {
+//     async function getUSDAData(){
+//         let res = await axios.get(url);
+//         let data = res.data;
+//         let version = data.sheets[0].data;
+//         let categorys = data.sheets[1].data;
+//         let products = data.sheets[2].data;
+//         let cookingTips = data.sheets[3].data;
+//         let cookingMethods = data.sheets[4].data;
+//         let dataDictionary = data.sheets[5].data;
+//         return products;
+//     }
+//     let cookingMethod = await CookingMethod.getAll();
+//     //let cookingMethod = await CookingMethod.getOne(1);
+//     console.log(cookingMethod);
       
-}
-main();
+// }
+// main();

@@ -1,4 +1,5 @@
 const Category = require('../data/category.js');
+const chai = require("chai");
 const { assert } = require('chai');
 const expect = chai.expect;
 
