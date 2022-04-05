@@ -38,22 +38,3 @@ class Product{
 }
 module.exports = Product;
 
-//main() is for testing, it will be replaced once we create test files
-async function main() {
-async function getUSDAData(){
-    let res = await axios.get(url);
-    let data = res.data;
-    let version = data.sheets[0].data;
-    let categorys = data.sheets[1].data;
-    let products = data.sheets[2].data;
-    let cookingTips = data.sheets[3].data;
-    let cookingMethods = data.sheets[4].data;
-    let dataDictionary = data.sheets[5].data;
-    return products;
-  }
-  let product = await Product.getNameWithID(90);
-//   console.log(product[0].contains());
-console.log(product);
-  
-}
-main();

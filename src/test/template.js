@@ -3,7 +3,7 @@ const Chef = require('../data/template.js');
 const chai = require("chai");
 const { assert } = require('chai');
 const expect = chai.expect;
-const assert = chai.assert;
+
 
 describe('Chef test', function(){
    
