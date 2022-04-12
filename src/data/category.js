@@ -1,21 +1,20 @@
 const url = "https://www.fsis.usda.gov/shared/data/EN/foodkeeper.json"
-const { ID } = require("axios");
+const axios = require('axios');
+
  class Category {
    static async getAll() {
-     const categoryCollection = await axios.get(url);
-     const category_cursor = categoryCollection.find();
-     let categories = await category_cursor.toArray();
-     categories.forEach(category => {
-       category._id =  category._id.toHexString();
-     });
-     return categories;
+    let res = await axios.get(url);
+    let data = res.data;
+    let categories = data.sheets[1].data;
+    return categories;
    }
    static async getOne(id) {
-    const categories= await this.getAll();
-    let category = await categories.findOne({ _id: ID(id) });
-    if (category !== null) {
-      category._id = category._id.toHexString();
-    }
-    return category;
+    let categories = await this.getAll();
+    let categoryWithID;
+    categories.forEach(category => {
+      if (category[0].ID === id) categoryWithID = category;
+     }); 
+    return categoryWithID;
   }
 }
+module.exports = Category;
