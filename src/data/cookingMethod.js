@@ -3,21 +3,11 @@
  * Author: Murtaza Nipplewala
  * cookingMethod.js is responsible for accessing the cooking method collection in the USDA database.*/
 
-//const Database = require("../lib/database.js");
 const url = 'https://www.fsis.usda.gov/shared/data/EN/foodkeeper.json'
 const axios = require('axios');
 
 class CookingMethod{
-    /**my own
-    static async getAll(){
-        let collection = await axios.get(Database);
-        let result = collection.data;
-        let cookingMethod = result.cookingMethod.data;
-        return cookingMethod;
-    }
-
-    /*Similar to Jim's
-     */  
+    
     static async getAll(){
         let collection = await axios.get(url);
         let data = collection.data;
@@ -25,19 +15,17 @@ class CookingMethod{
         return cookingMethod;
     }
 
-    /*Similar to Jim's
-     */ 
     static async getOne(id){
         let collection = await this.getAll();
-        let cookingMethodID;
+        let cookingMethodByID;
        collection.forEach( cookingMethod => {
-        if (collection.ID === id) cookingMethodByID = cookingMethod ;
+        if (cookingMethod[0].ID === id) cookingMethodByID = cookingMethod ;
        }); 
        return cookingMethodByID;
     }
 }
 
-module.exports = CookingMethod
+module.exports = CookingMethod;
 
 // async function main() {
 //     async function getUSDAData(){
