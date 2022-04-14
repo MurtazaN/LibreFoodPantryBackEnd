@@ -16,8 +16,9 @@ describe("cookingMethod, getAll", () => {
 
 describe("cookingMethod, getOne", () => {
     let cookingMethod = CookingMethod;
-    let randomCookingMethodID = Math.round((Math.random() * 100) + 1);
+    let randomCookingMethodID = Math.round(Math.random() * 100);
     
+    //this
     it("Verify response is an array", async() =>{
         let res = await cookingMethod.getOne(randomCookingMethodID);
         expect(res).to.be.an('array');
@@ -28,6 +29,7 @@ describe("cookingMethod, getOne", () => {
         expect(res).to.be.undefined;
     });
 
+    //this
     it("Verify first element is an object", async() =>{
         let res = await cookingMethod.getOne(randomCookingMethodID);
         let ID = res[0];
