@@ -3,10 +3,38 @@
 Project hosting for the refactoring of the FoodKeeper API Backend in Javascript.
 
 ### Requirements
-* TBD
+* Java 8 or higher (https://www.oracle.com/technetwork/java/javase/downloads/index.html) 
 
 ### Application Download and Build
-* TBD
+To avoid dependency conflicts across projects, and to reduce variance
+between development platforms, we use VS Code devcontainers.
+
+New to VS Code devcontainers? Start here
+https://code.visualstudio.com/docs/remote/containers 
+and follow its installation instructions. Be sure to install and
+configure Git too.
+
+Now download, install, and run this project and its devcontainer as
+follows.
+
+1. Navigate to this project on GitLab and select
+    `Clone -> Open in your IDE -> Visual Studio Code (HTTPS)`.
+2. Select location to store the project.
+3. Select "Reopen in container" when option is provided.
+
+### 1.2. Prepare envionment 
+
+```
+bin/down.sh
+bin/up.sh
+```
+
+### 1.3. Rebuild and Test
+
+```
+bin/retest.sh
+```
+
 
 ## REST API Endpoints
 
