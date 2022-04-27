@@ -18,3 +18,10 @@ const axios = require('axios');
   }
 }
 module.exports = Category;
+
+async function main(){
+  let categories = await Category.getAll();
+  console.log(JSON.stringify(categories));
+}
+
+main();

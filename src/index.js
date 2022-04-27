@@ -10,6 +10,7 @@ async function main() {
   let app = await buildApp();
   let server = http.createServer(app)
   server.listen(SERVER_PORT);
+  console.log(`Server running on port ${SERVER_PORT}`)
 }
 
 async function buildApp() {
@@ -17,13 +18,15 @@ async function buildApp() {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  app.use(
-    OpenApiValidator.middleware({
-      apiSpec: OPENAPI_FILE,
-      validateRequests: true,
-      validateResponses: false,
-    }),
-  );
+
+  // TEMP: disable Open API Validation
+  // app.use(
+  //   OpenApiValidator.middleware({
+  //     apiSpec: OPENAPI_FILE,
+  //     validateRequests: true,
+  //     validateResponses: false,
+  //   }),
+  // );
 
   mountEndpoints(app);
 

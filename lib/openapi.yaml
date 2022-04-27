@@ -1,0 +1,699 @@
+openapi: 3.0.3
+info:
+  title: FoodKeeper
+  version: 0.1.0
+paths:
+  /category:
+    parameters:
+      - name: name
+        in: query
+        schema:
+          $ref: '#/components/schemas/category'
+        required: false
+        description: Get all categories.
+    get:
+      description: List all categories
+      responses:
+        '200':
+          description: All categories were found and listed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/category'
+  '/category/:id':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/categoryId'
+        description: Category with ID
+    get:
+      description: Get a category based on ID
+      responses:
+        '200':
+          description: Category found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/category'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /product/:
+    parameters:
+      - name: name
+        in: query
+        schema:
+          $ref: '#/components/schemas/product'
+        required: true
+        description: Get all products.
+    get:
+      description: List all Products
+      responses:
+        '200':
+          description: All Products were found and listed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+  '/product/:id':
+    parameters:
+      - name: id
+        in: path
+        schema:
+          $ref: '#/components/schemas/productID'
+        required: true
+        description: Find product by ID.
+    get:
+      description: Get a Product
+      responses:
+        '200':
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/product/:id/name':
+    parameters:
+      - name: name
+        in: path
+        schema:
+          $ref: '#/components/schemas/productName'
+        required: true
+        description: Get product name.
+    get:
+      description: Find product and returned
+      responses:
+        '200':
+          description: Item found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/product/category/:categoryId':
+    parameters:
+      - name: name
+        in: query
+        schema:
+          $ref: '#/components/schemas/categoryId'
+        required: true
+        description: All products with category ID.
+    get:
+      description: View Product category
+      responses:
+        '200':
+          description: Item found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /cookingMethods:
+    parameters:
+      - name: name
+        in: query
+        schema:
+          $ref: '#/components/schemas/cookingMethod'
+        required: true
+        description: Cooking methods.
+    get:
+      description: List Cooking Methods
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cookingMethodArray'
+  '/cookingMethods/:id':
+    parameters:
+      - name: id
+        in: path
+        schema:
+          $ref: '#/components/schemas/cookingMethodId'
+        required: true
+        description: Cooking method with ID.
+    get:
+      description: View Cooking Method
+      responses:
+        '200':
+          description: Cooking Method found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cookingMethod'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /cookingTips:
+    parameters:
+      - name: name
+        in: query
+        schema:
+          $ref: '#/components/schemas/cookingTip'
+        required: true
+        description: Cooking tips.
+    get:
+      description: List Cooking Tips
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cookingTipArray'
+  '/cookingTips/:id':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/cookingTipID'
+        description: Cooking tip with ID.
+    get:
+      description: View Cooking Tips
+      responses:
+        '200':
+          description: Cooking Tip found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cookingTip'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    BadRequest:
+      description: The request was malformed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvoError'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvoError'
+    ServerError:
+      description: There was an error in the server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvoError'
+  schemas:
+    category:
+      description: Class representing a category tracked by the application
+      example:
+        categoryId: '1'
+        categoryName: Meat
+        subcategoryName: Fresh
+      type: object
+      properties:
+        categoryId:
+          $ref: '#/components/schemas/categoryId'
+        categoryName:
+          $ref: '#/components/schemas/categoryName'
+        subcategoryName:
+          $ref: '#/components/schemas/subcategoryName'
+      required:
+        - categoryId
+        - categoryName
+    categoryId:
+      description: Unique identifier for the category
+      example: 1
+      nullable: false
+      pattern: \d+
+      maxLength: 128
+      format: int32
+      type: integer
+    categoryName:
+      description: Name of the category
+      example: Meat
+      maxLength: 256
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    contentType:
+      description: Content Type of food
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    cookingMethod:
+      description: Class representing a cooking method tracked by the application
+      example:
+        productID: '1'
+        cookingMethodId: '1'
+        methodToCook: Oven
+        measureFrom: '1'
+        measureTo: '2'
+        sizeMetric: pounds
+        cookingTemp: '450'
+        timingFrom: '30'
+        timingTo: '45'
+        timingMetric: minutes
+        timingPer: pound
+      type: object
+      properties:
+        productID:
+          $ref: '#/components/schemas/productID'
+        cookingMethodId:
+          $ref: '#/components/schemas/cookingMethodId'
+        methodToCook:
+          $ref: '#/components/schemas/methodToCook'
+        measureFrom:
+          $ref: '#/components/schemas/measureFrom'
+        measureTo:
+          $ref: '#/components/schemas/measureTo'
+        sizeMetric:
+          $ref: '#/components/schemas/sizeMetric'
+        cookingTemp:
+          $ref: '#/components/schemas/cookingTemp'
+        timingFrom:
+          $ref: '#/components/schemas/timingFrom'
+        timingTo:
+          $ref: '#/components/schemas/timingTo'
+        timingMetric:
+          $ref: '#/components/schemas/timingMetric'
+        timingPer:
+          $ref: '#/components/schemas/timingPer'
+      required:
+        - cookingMethodId
+        - methodToCook
+    cookingMethodId:
+      description: Unique identifier for the cooking method
+      example: 1
+      nullable: false
+      pattern: \d+
+      format: int32
+      type: integer
+    cookingMethodArray:
+      type: array
+      nullable: false
+      items:
+        $ref: '#/components/schemas/cookingMethod'
+    cookingTemp:
+      description: cooking Temperature.
+      example: 450
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    cookingTip:
+      description: Class representing a cooking method tracked by the application
+      example:
+        cookingTipID: '8'
+        cookingTipContent: Braising is roasting or simmering less-tender meats with a small amount of liquid in a tightly covered pan.
+        safeMinTemp: '145'
+        restTime: '3'
+        restTimeMetric: minutes
+        productID: '39'
+      type: object
+      properties:
+        cookingTipID:
+          $ref: '#/components/schemas/cookingTipID'
+        cookingTipContent:
+          $ref: '#/components/schemas/cookingTipContent'
+        safeMinTemp:
+          $ref: '#/components/schemas/safeMinTemp'
+        restTime:
+          $ref: '#/components/schemas/restTime'
+        restTimeMetric:
+          $ref: '#/components/schemas/restTimeMetric'
+        productID:
+          $ref: '#/components/schemas/productTipID'
+      required:
+        - cookingTipID
+        - cookingTipContent
+        - safeMinTemp
+        - restTime
+        - restTimeMetric
+        - productID
+    cookingTipContent:
+      description: Tips for cooking
+      example: Cook until yolk and white are firm.
+      maxLength: 256
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    cookingTipID:
+      description: Unique identifier for the cooking tip
+      example: 8
+      nullable: false
+      pattern: \d+
+      maxLength: 128
+      format: int32
+      type: integer
+    cookingTipArray:
+      type: array
+      nullable: false
+      items:
+        $ref: '#/components/schemas/cookingTip'
+    dop_freezerLife:
+      $ref: '#/components/schemas/productTipID'
+    dop_pantryLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    dop_refrigeratorLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    EvoError:
+      description: Not Acceptable
+      type: object
+      example:
+        message: '.response should have required property ''name'', .response should have required property ''id'''
+        errors:
+          - path: .response.name
+            message: should have required property 'name'
+            errorCode: required.openapi.validation
+          - path: .response.id
+            message: should have required property 'id'
+            errorCode: required.openapi.validation
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+              message:
+                type: string
+              errorCode:
+                type: string
+    freezerLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    keywords:
+      description: Keywords for given Product.
+      example: Cheese
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    max:
+      description: Miximum time for shelf life .
+      example: 6
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: int32
+      type: integer
+    measureFrom:
+      description: Minimum size measurement
+      example: 1
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: double
+      type: number
+    measureTo:
+      description: Miximum size measurement
+      example: 2
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: double
+      type: number
+    methodToCook:
+      description: Method to cook.
+      example: Oven
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    metric:
+      description: Metric for shelf life
+      example: months
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    min:
+      description: Minimum time for shelf life .
+      example: 0
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: int32
+      type: integer
+    pantryAfterOpeningLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    pantryLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    product:
+      description: Class representing a product tracked by the application
+      example:
+        productID: '1'
+        categoryID: '1'
+        productName: Cheese
+        subtitle: Swiss
+        keywords: Cheese
+        dop_freezerLife: '0,6,months,sealed'
+        dop_pantryLife: '0,6,months,sealed'
+        dop_refrigeratorLife: '0,6,months,sealed'
+        pantryLife: '0,6,months,sealed'
+        pantryAfterOpeningLife: '0,6,months,sealed'
+        refrigeratorLife: '0,6,months,sealed'
+        refrigerateAfterOpeningLife: '0,6,months,sealed'
+        refrigerateAfterThawingLife: '0,6,months,sealed'
+        freezerLife: '0,6,months,sealed'
+      type: object
+      properties:
+        dop_freezerLife:
+          $ref: '#/components/schemas/productTipID'
+        dop_pantryLife:
+          $ref: '#/components/schemas/dop_pantryLife'
+        dop_refrigeratorLife:
+          $ref: '#/components/schemas/dop_refrigeratorLife'
+        freezerLife:
+          $ref: '#/components/schemas/freezerLife'
+        keywords:
+          $ref: '#/components/schemas/keywords'
+        pantryAfterOpeningLife:
+          $ref: '#/components/schemas/pantryAfterOpeningLife'
+        pantryLife:
+          $ref: '#/components/schemas/pantryLife'
+        productID:
+          $ref: '#/components/schemas/productID'
+        productName:
+          $ref: '#/components/schemas/productName'
+        refrigeratorAfterOpeningLife:
+          $ref: '#/components/schemas/refrigeratorAfterOpeningLife'
+        refrigeratorAfterThawingLife:
+          $ref: '#/components/schemas/refrigeratorAfterThawingLife'
+        refrigeratorLife:
+          $ref: '#/components/schemas/refrigeratorLife'
+        subtitle:
+          $ref: '#/components/schemas/subtitle'
+        categoryID:
+          $ref: '#/components/schemas/categoryId'
+      required:
+        - productID
+        - productName
+        - categoryId
+    productID:
+      description: Unique identifier for the product .
+      example: 1
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: int32
+      type: integer
+    productName:
+      description: Name of the Product.
+      example: Cheese
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    productTipID:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    refrigeratorAfterOpeningLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    refrigeratorAfterThawingLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    refrigeratorLife:
+      type: object
+      nullable: false
+      properties:
+        shelfLife:
+          $ref: '#/components/schemas/shelfLife'
+    restTime:
+      description: Rest time
+      example: 145
+      nullable: false
+      pattern: \d+
+      format: int32
+      type: integer
+    restTimeMetric:
+      description: Metric for rest time
+      example: minutes
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: '(?:minutes)'
+      type: string
+    safeMinTemp:
+      description: Safe minimum temperature in Fahrenheit
+      example: 145
+      nullable: false
+      pattern: \d+
+      maxLength: 128
+      format: int32
+      type: integer
+    shelfLife:
+      description: Class representing a shelf life found in product data
+      example:
+        min: '0'
+        max: '6'
+        metric: months
+        storageTips: sealed
+      type: object
+      properties:
+        min:
+          $ref: '#/components/schemas/min'
+        max:
+          $ref: '#/components/schemas/max'
+        metric:
+          $ref: '#/components/schemas/metric'
+        storageTips:
+          $ref: '#/components/schemas/storageTips'
+      required:
+        - min
+        - max
+        - metric
+        - storageTips
+    sizeMetric:
+      description: Measurement metric.
+      example: Pounds
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    storageTips:
+      description: Storage tips
+      example: sealed
+      maxLength: 128
+      minLength: 1
+      nullable: true
+      pattern: \S+
+      type: string
+    subcategoryName:
+      description: Name of the subcategory
+      example: Fresh
+      maxLength: 256
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    subtitle:
+      description: Subtitle of Product.
+      example: Swiss
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    timingFrom:
+      description: Minimum cooking time
+      example: 30
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: double
+      type: number
+    timingMetric:
+      description: cooking Time metric.
+      example: minutes
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    timingPer:
+      description: Cooking time adjustment per specified metric
+      example: pounds
+      maxLength: 128
+      minLength: 1
+      nullable: false
+      pattern: \S+
+      type: string
+    timingTo:
+      description: Miximum cooking time
+      example: 45
+      nullable: false
+      pattern: ^-?\d*(\.\d+)?$
+      format: double
+      type: number
+    view:
+      description: Display type of content.
+      type: object
+      properties:
+        contentType:
+          $ref: '#/components/schemas/contentType'
+      required:
+        - contentType

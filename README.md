@@ -22,6 +22,22 @@ follows.
 2. Select location to store the project.
 3. Select "Reopen in container" when option is provided.
 
+
+### Prepare Enviorment
+
+- cd into src: `cd src`
+- Install node packages: `npm i`
+
+### Run Server in Docker
+
+- Start Development Docker Container: `npm run docker-dev`
+- Start Production Docker: `npm run docker`
+
+### Updating Bundle Process
+
+Paste Open API Bundle into /lib
+rename file to openapi.yaml
+
 ### 1.2. Prepare envionment 
 
 ```
