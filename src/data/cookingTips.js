@@ -1,5 +1,6 @@
 const axios = require('axios');
 const url = 'https://www.fsis.usda.gov/shared/data/EN/foodkeeper.json'
+const localURL = 'http://localhost:10001/category '
 
 class CookingTip{
 
@@ -19,7 +20,7 @@ class CookingTip{
        return cookingTipID;
     }
 }
-/*
+
 module.exports = CookingTip;
 
 //main() is for testing, it will be replaced once we create test files
@@ -36,7 +37,8 @@ async function getUSDAData(){
     return cookingTips;
   }
   let tip = await CookingTip.getOne(21);
-console.log(tip);
+  let result = await axios.get(localURL);
+// console.log(tip);
   
 }
-main();*/
+main();

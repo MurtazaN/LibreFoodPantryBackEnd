@@ -5,6 +5,7 @@
 
 const url = 'https://www.fsis.usda.gov/shared/data/EN/foodkeeper.json'
 const axios = require('axios');
+const logger = require('../lib/logger');
 
 class CookingMethod{
     

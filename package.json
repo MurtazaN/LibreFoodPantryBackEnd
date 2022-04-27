@@ -1,20 +1,19 @@
 {
-    "name": "manage-items-api",
+    "name": "foodkeeper-api-0.1.0",
     "version": "0.1.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "mocha src/test"
-    },
-    "dependencies": {
-        "axios": "^0.26.0",
-        "chai": "^4.3.6",
-        "mocha": "^9.2.0"
+        "test": "cd src  && npm run test",
+        "server": "cd src && npm run start",
+        "dev-server": "cd src && npm run dev-server",
+        "docker-dev": "docker compose -f docker-compose.dev.yaml up",
+        "docker": "docker compose build --no-cache && docker compose up"
     },
     "release": {
         "extends": "@semantic-release/gitlab-config",
-        "branches": [ "main" ]
-      }
-    
-   
+        "branches": [
+            "issue10_bundleAndValidateAPI"
+        ]
+    }
 }

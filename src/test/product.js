@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const Product = require('../data/product');
+const Product = require('../data/product.js');
 
 
 describe("product, getAll", () => {

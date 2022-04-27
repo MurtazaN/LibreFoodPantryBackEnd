@@ -11,6 +11,6 @@ const Product = require("../data/product.js");
           } else {
             Product.getAll(product)
           }
-          response.status(200).json(products);
+          response.status(200).json(product);
         }	
 }

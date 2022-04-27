@@ -1,0 +1,24 @@
+
+GET http://localhost:10001/category HTTP/1.1
+###
+GET http://localhost:10001/cookingMethods
+###
+# Does not work
+GET http://localhost:10001/cookingTips 
+###
+GET http://localhost:10001/product
+GET http://localhost:10001/category:1
+###
+GET http://localhost:10001/CookingMethods/:1
+###
+GET http://localhost:10001/CookingTips/:id
+###
+GET http://localhost:10001/product/category/:1
+###
+GET http://localhost:10001/product/:id/name
+###
+GET http://localhost:10001//product/:id
+
+###
+GET http://localhost:10001/version
+

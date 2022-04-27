@@ -1,4 +1,4 @@
-const CookingMethods = require("../data/CookingMethods.js"); //Need to add data/CookingMethods in future issue
+const CookingMethods = require("../data/cookingMethod.js"); //Need to add data/CookingMethods in future issue
 
 module.exports = {
   method: 'get',
