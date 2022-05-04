@@ -26,6 +26,12 @@ class CookingMethod{
     }
 }
 
+async function main(){
+    let cookingMethod = await CookingMethod.getOne(1);
+    console.log(cookingMethod);
+  }
+//   main()
+
 module.exports = CookingMethod;
 
 // async function main() {

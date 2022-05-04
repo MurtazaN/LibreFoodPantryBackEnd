@@ -5,7 +5,7 @@ module.exports = {
   path: '/cookingTips', 
   async handler(request, response) {
     let cookingTips;
-    cookingTips = await CookingTips.getCookingTips(); //Need to implement getCookingTips()
+    cookingTips = await CookingTips.getAll(); //Need to implement getCookingTips()
     response.status(200).json(cookingTips);
   }
 };

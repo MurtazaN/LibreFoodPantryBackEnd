@@ -4,8 +4,11 @@ const Category = require("../data/category.js");
         path: '/category/:id',
         async handler(request, response) {
           const id = request.params.id;
-          const category = await Category.getOne(id);
-          if (category !== null) {
+         let category;
+         if(id !== undefined){
+           category = await Category.getOne(parseInt(id))
+         }
+          if (category !== undefined) {
             response.status(200).json(category);
           } else {
             response.status(404).json({

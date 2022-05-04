@@ -41,4 +41,4 @@ async function getUSDAData(){
 // console.log(tip);
   
 }
-main();
+// main();

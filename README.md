@@ -38,20 +38,6 @@ follows.
 Paste Open API Bundle into /lib
 rename file to openapi.yaml
 
-### 1.2. Prepare envionment 
-
-```
-bin/down.sh
-bin/up.sh
-```
-
-### 1.3. Rebuild and Test
-
-```
-bin/retest.sh
-```
-
-
 ## REST API Endpoints
 
 | Method | Endpoint  | Body  | Return | Note |

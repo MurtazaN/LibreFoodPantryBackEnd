@@ -5,7 +5,10 @@ const Product = require("../data/product.js");
         path: '/product/:id/name',
         async handler(request, response) {
           const id = request.params.id;
-          const product = await Product.getNameWithID(id);
+          let product;
+          if(id !== undefined) {
+            product = await Product.getNameWithID(parseInt(id));
+          }
           if (product !== null) {
             response.status(200).json(product);
           } else {

@@ -24,4 +24,4 @@ async function main(){
   console.log(JSON.stringify(categories));
 }
 
-main();
+// main();
