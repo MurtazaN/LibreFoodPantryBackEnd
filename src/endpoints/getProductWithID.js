@@ -5,8 +5,11 @@ module.exports = {
   path: '/product/:id',
   async handler(request, response) {
     const id = request.params.id;
-    const product = await Product.getOne(id);
-    if (product !== null) {
+    let product;
+    if(id !== undefined) {
+      product = await Product.getOne(parseInt(id));
+    }
+    if (product !== undefined) {
       response.status(200).json(product);
     } else {
       response.status(404).json({

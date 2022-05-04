@@ -2,12 +2,16 @@ const CookingMethods = require("../data/cookingMethod.js"); //Need to add data/C
 
 module.exports = {
   method: 'get',
-  path: '/CookingMethods/:id',
+  path: '/cookingMethods/:id',
   async handler(request, response) {
     const id = request.params.id;
-    const cookingMethods = await CookingMethods.getOne(id); //CookingMethods.getOne() needs to be implemented
-    if (cookingMethods !== null) {
-      response.status(200).json(cookingMethods);
+    console.log(id);
+   let cookingMethod;
+   if(id!== undefined) {
+     cookingMethod = await CookingMethods.getOne(parseInt(id))
+   }
+    if (cookingMethod !== null) {
+      response.status(200).json(cookingMethod);
     } else {
       response.status(404).json({
         status: 404,

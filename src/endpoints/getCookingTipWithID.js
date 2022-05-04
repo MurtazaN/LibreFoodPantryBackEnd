@@ -5,9 +5,12 @@ module.exports = {
   path: '/CookingTips/:id',
   async handler(request, response) {
     const id = request.params.id;
-    const cookingTips = await CookingTips.getOne(id); //CookingTips.getOne() needs to be implemented
-    if (cookingTips !== null) {
-      response.status(200).json(cookingTips);
+    let cookingTip;
+    if( id!== undefined){
+      cookingTip = await CookingTips.getOne(parseInt(id))
+    }
+    if (cookingTip !== undefined) {
+      response.status(200).json(cookingTip);
     } else {
       response.status(404).json({
         status: 404,
