@@ -9,7 +9,7 @@ const Product = require("../data/product.js");
           if(CID !== undefined){
           product = await Product.getAllWithCID(parseInt(CID));
           }
-          if (product !== null) {
+          if (product.length !== 0) {
             response.status(200).json(product);
           } else {
             response.status(404).json({

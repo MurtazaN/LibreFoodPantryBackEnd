@@ -5,12 +5,11 @@ module.exports = {
   path: '/cookingMethods/:id',
   async handler(request, response) {
     const id = request.params.id;
-    console.log(id);
    let cookingMethod;
    if(id!== undefined) {
      cookingMethod = await CookingMethods.getOne(parseInt(id))
    }
-    if (cookingMethod !== null) {
+    if (cookingMethod !== undefined) {
       response.status(200).json(cookingMethod);
     } else {
       response.status(404).json({
