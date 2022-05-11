@@ -33,6 +33,12 @@ follows.
 - Start Development Docker Container: `npm run docker-dev`
 - Start Production Docker: `npm run docker`
 
+### Run tests
+- to run all tests
+  - npm run test
+- to run one test file
+  - npx mocha path
+
 ### Updating Bundle Process
 
 Paste Open API Bundle into /lib

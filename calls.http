@@ -9,7 +9,7 @@ GET http://localhost:10001/product
 ###
 GET http://localhost:10001/version
 ###
-GET http://localhost:10001/category/1
+GET http://localhost:10001/category/-1
 ###
 GET http://localhost:10001/cookingMethods/1
 ###

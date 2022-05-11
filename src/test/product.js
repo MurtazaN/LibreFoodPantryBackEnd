@@ -3,189 +3,88 @@ const expect = chai.expect;
 const assert = chai.assert;
 const Product = require('../data/product.js');
 const { default: axios } = require('axios');
-const validCall = 'https://api.genderize.io?name=luc';
-const inValidCall = 'https://api.genderize.io?name=12';
+const getAllUrl = 'http://localhost:10001/product';
+const getOnelUrl = 'http://localhost:10001/product/';
+const productsByCatIDUrl = 'http://localhost:10001/product/category/';
+const getNameUrl = 'http://localhost:10001/product/1/name';
 
-describe("product, getAll", () => {
-    let product = Product;    
+describe("GET /product", () => {
+    it('Check status response code (200)', async ()=>{
+        let res = await axios.get(getAllUrl)
+        expect(res.status).to.equal(200)
+    })
     it("Verify response is an array", async ()=>{
-        let res = await product.getAll();
-        expect(res).to.be.an('array');
+        let res = await axios.get(getAllUrl)
+        expect(res.data).to.be.an('array');
     });
 });
 
-describe("product, getOne", () => {
-    let product = Product;
-    let randomProductID = Math.round(Math.random() * 661);
+describe("GET /product:id " , async() => {
+    let randomProductID = Math.round(Math.random() * 300);
+    let randomProductUrl = getOnelUrl.concat(randomProductID.toString())
+    let invalidUrl = getOnelUrl.concat('-1');
     
+    it('Check status response code (200)', async ()=>{
+        let res = await axios.get(randomProductUrl)
+        expect(res.status).to.equal(200)
+    })
     it("Verify response is an array", async() =>{
-        let res = await product.getOne(randomProductID);
-        expect(res).to.be.an('array');
-    });
-    
-    it("Verify invalid ID will return undefined", async() =>{
-        let res = await product.getOne(-1);
-        expect(res).to.be.undefined;
+        let res = await axios.get(randomProductUrl);
+        expect(res.data).to.be.an('array');
     });
 
     it("Verify first element is an object", async() =>{
-        let res = await product.getOne(randomProductID);
-        let ID = res[0];
-        expect(ID).to.be.an('object');
+        let res = await axios.get(randomProductUrl);
+        expect(res.data[0].ID).to.equal(randomProductID);
+    });
+    it("Verify invalid inputs fails with 404", async() =>{
+        let res = await axios.get(invalidUrl);
+        expect(res.status).to.equal(404);
     });
 });
 
-describe("product, getAllWithCID", () => {
-    let product = Product;
+describe("GET product/category:id", () => {
     let randomCID = Math.round(Math.random() * 25);
+    let randomUrl = productsByCatIDUrl.concat(randomCID.toString())
+    let invalidUrl = productsByCatIDUrl.concat(-1)
     
     it("Verify response is an array", async() =>{
-        let res = await product.getAllWithCID(randomCID);
-        expect(res).to.be.an('array');
+        let res = await axios.get(randomUrl)
+        expect(res.data).to.be.an('array');
     });
 
     it("Verify all elements of response have expected Category ID", async() =>{
-        let res = await product.getAllWithCID(randomCID); 
         let isCorrectCID = true;
-        // let randomID = randomID();
-        res.forEach(product =>{
+        let res = await axios.get(randomUrl)
+        res.data.forEach(product =>{
             if (product[1].Category_ID !== randomCID) isCorrectCID = false;
         });
         expect(isCorrectCID).to.be.true;
     });
-});
-
-describe("product, getNameWithID", () => {
-    let product = Product;
-    let randomProductID = Math.round(Math.random() * 661);
-    
-    it("Verify result is a string, from random ID", async() => {
-        let res = await product.getNameWithID(randomProductID);
-        expect(res).to.be.a('string');
-    });
-
-    it("Verify result is the correct string, from specific ID", async() => {
-        let res = await product.getNameWithID(17);
-        expect(res).to.equal('Egg substitutes');
+    it("Verify invalid inputs fails with 404", async() =>{
+        let res = await axios.get(invalidUrl);
+        expect(res.status).to.equal(404);
     });
 });
-// Testing API Template for Products using the name, id, and categoryId parameters. 
-// Did not include subtitle or keywords parameters for this, but they might needed to be added
-describe('get /products', function(){
-    it('Check the data type of the API call to be an array of products', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res).to.be.an('array');
-    })
-    it('Check status response code (200)', async ()=>{
-        let res = await axios.get(validCall)
+
+describe('GET /product/:id/name', () => {
+    let invalidUrl = 'http://localhost:10001/product/-1/name';
+    it("Verify result status is 200", async() => {
+        let res = await axios.get(getNameUrl);
         expect(res.status).to.equal(200)
-    })
-});
-describe('get products/{id}', function(){
-    it('Check that data type is an object', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res).to.be.an('object');
-    })
-    it('Check status response code (200)', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.status).to.equal(200)
-    })
-    it('Getting valid input for the id', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.id).to.equal('ID')
-    })
-    it('Getting valid input for the name', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.name).to.equal('Name')
-    })
-    it('Getting valid input for the category ID', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.categoryId).to.equal('categoryId')
-    })
-    it('Getting invalid input for name', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.name).to.equal(null)
-    })
-    it('Getting invalid input for id', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.id).to.equal(null)
-    })
-    it('Getting invalid input for categoryId', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.categoryId).to.equal(null)
-    })
-});
-describe('get products/{id}/name', function(){
-    it('Check that data type is an object', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res).to.be.an('object');
-    })
-    it('Check status response code (200)', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.status).to.equal(200)
-    })
-    it('Getting valid input for the id', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.id).to.equal('ID')
-    })
-    it('Getting valid input for the name', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.name).to.equal('Name')
-    })
-    it('Getting valid input for the category ID', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.categoryId).to.equal('categoryId')
-    })
-    it('Getting invalid input for name', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.name).to.equal(null)
-    })
-    it('Getting invalid input for id', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.id).to.equal(null)
-    })
-    it('Getting invalid input for categoryId', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.categoryId).to.equal(null)
-    })
-});
-describe('get products/category/{categoryId}', function(){
-    it('Check that data type is an object', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res).to.be.an('object');
-    })
-    it('Check that category is valid', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.category).to.be.an('object');
-    })
-    it('Check status response code (200)', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.status).to.equal(200)
-    })
-    it('Getting valid input for the id', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.id).to.equal('ID')
-    })
-    it('Getting valid input for the name', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.name).to.equal('Name')
-    })
-    it('Getting valid input for the category ID', async ()=>{
-        let res = await axios.get(validCall)
-        expect(res.data.categoryId).to.equal('categoryId')
-    })
-    it('Getting invalid input for name', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.name).to.equal(null)
-    })
-    it('Getting invalid input for id', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.id).to.equal(null)
-    })
-    it('Getting invalid input for categoryId', async ()=>{
-        let res = await axios.get(inValidCall)
-        expect(res.data.categoryId).to.equal(null)
-    })
+    });
+    it("Verify result is the correct string", async() => {
+        let res = await axios.get(getNameUrl);
+        expect(res.data).to.be.a('string')
+    });
+    it("Verify result is the correct string", async() => {
+        let res = await axios.get(getNameUrl);
+        expect(res.data).to.equal('Butter');
+    });
+    it("Verify invalid inputs fails with 404", async() =>{
+        let res = await axios.get(invalidUrl);
+        expect(res.status).to.equal(404);
+    });
 });
 
 
